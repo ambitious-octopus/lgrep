@@ -7,9 +7,6 @@ token = os.environ["OPENAI_API_KEY"]
 
 client = openai.Client(api_key=token)
 
-    
-# print(f"token: {token}")
-
 
 def call(stdin, text):
 
