@@ -8,7 +8,7 @@ token = os.environ["OPENAI_API_KEY"]
 client = openai.Client(api_key=token)
 
     
-print(f"token: {token}")
+# print(f"token: {token}")
 
 
 def call(stdin, text):
@@ -26,9 +26,7 @@ def call(stdin, text):
         model="gpt-4o",
     )
     result = result.choices[0].message.content
-    print("/////////")
-    print(result)
-    print("/////////")
+    # print(result)
     lines = stdin.split("\n")
     for line in lines:
         res = re.match(result, line)
@@ -51,11 +49,10 @@ def call(stdin, text):
     # print(x)
     # print(x)
 
-
-
 # total arguments
 arg = sys.argv[1]
-print(len(arg))
+# print(len(arg))
 
 data = sys.stdin.read()
 call(data, arg)
+sys.exit(0)
