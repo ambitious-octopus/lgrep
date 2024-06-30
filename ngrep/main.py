@@ -3,13 +3,21 @@ import os
 import openai
 import re
 from rich.console import Console
+
 console = Console()
-
 token = os.environ["OPENAI_API_KEY"]
-
 client = openai.Client(api_key=token)
 
-def generate_pattern(prompt):
+def generate_pattern(prompt: str):
+    """
+    Generate a regex pattern that match the given condition
+
+    Args:
+        prompt str: The condition to match in natural language
+
+    Returns:
+        str: The generated regex pattern
+    """
     result = client.chat.completions.create(
         messages=[
             {
