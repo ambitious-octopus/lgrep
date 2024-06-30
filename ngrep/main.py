@@ -2,6 +2,8 @@ import sys
 import os
 import openai
 import re
+from rich.console import Console
+console = Console()
 
 token = os.environ["OPENAI_API_KEY"]
 
@@ -24,10 +26,14 @@ def generate_pattern(prompt):
     return result
     
 
-arg = sys.argv[1]
+if len(sys.argv) > 1:
+    arg = sys.argv[1]
+else:
+    console.print("No argument given", style="bold red")
+    sys.exit(1)
 
 if sys.stdin.isatty():
-    print("No input data")
+    console.print("No input data", style="bold red")
     sys.exit(1)
     
 
@@ -37,7 +43,7 @@ pattern = generate_pattern(arg)
 for line in sys.stdin.readlines():
     res = re.match(pattern, line)
     if res is not None:
-        print(line, end="")
+        console.print(line, end="", style="bold green")
     
 sys.exit(0)
     
