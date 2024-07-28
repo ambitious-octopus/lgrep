@@ -3,6 +3,7 @@ import os
 import openai
 import re
 from rich.console import Console
+from .messages import help_message
 
 console = Console()
 token = os.environ["OPENAI_API_KEY"]
@@ -44,6 +45,10 @@ else:
 if sys.stdin.isatty():
     console.print("No input data", style="bold red")
     sys.exit(1)
+    
+if arg == "--help" or arg == "-h":
+    console.print(help_message, style="bold blue")
+    sys.exit(0)
     
 
     
