@@ -5,7 +5,7 @@ import string
 # Set up the parameters for the directory
 root_dir = "test-tree"
 num_files = 30
-file_extensions = ['txt', 'csv', 'py', 'jpg', 'pdf', 'docx', 'mp3']
+file_extensions = ['txt', 'csv', 'py', 'jpg', 'pdf', 'docx', 'mp3', "png"]
 
 # Function to generate a random string of fixed length
 def random_string(length=8):

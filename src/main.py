@@ -31,6 +31,7 @@ def generate_pattern(prompt: str):
         model="gpt-4o",
     )
     result = result.choices[0].message.content
+    print("pattern:", result)
     return result
     
 
