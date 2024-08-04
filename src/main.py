@@ -1,13 +1,9 @@
 import sys
-import os
-import openai
 import re
-from rich.console import Console
-from .messages import help_message
+from .messages import help_message, version_message
+from src.settings import Singleton
 
-console = Console()
-token = os.environ["OPENAI_API_KEY"]
-client = openai.Client(api_key=token)
+handler = Singleton()
 
 def generate_pattern(prompt: str):
     """
@@ -19,7 +15,7 @@ def generate_pattern(prompt: str):
     Returns:
         str: The generated regex pattern
     """
-    result = client.chat.completions.create(
+    result = handler.client.chat.completions.create(
         messages=[
             {
                 "role": "system",
@@ -39,17 +35,20 @@ def generate_pattern(prompt: str):
 if len(sys.argv) > 1:
     arg = sys.argv[1]
 else:
-    console.print("No argument given", style="bold red")
-    sys.exit(1)
-
-if sys.stdin.isatty():
-    console.print("No input data", style="bold red")
+    handler.console.print("No argument given", style="bold red")
     sys.exit(1)
     
 if arg == "--help" or arg == "-h":
-    console.print(help_message, style="bold blue")
+    handler.console.print(help_message, style="bold blue")
     sys.exit(0)
     
+if arg == "--version" or arg == "-v":
+    handler.console.print(version_message, style="bold blue")
+    sys.exit(0)
+
+if sys.stdin.isatty():
+    handler.console.print("No input data", style="bold red")
+    sys.exit(1)
 
     
 pattern = generate_pattern(arg)
@@ -57,7 +56,7 @@ pattern = generate_pattern(arg)
 for line in sys.stdin.readlines():
     res = re.match(pattern, line)
     if res is not None:
-        console.print(line, end="", style="bold green")
+        handler.console.print(line, end="", style="bold green")
     
 sys.exit(0)
     
