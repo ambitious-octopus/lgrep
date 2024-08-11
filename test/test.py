@@ -4,7 +4,7 @@ import subprocess
 @pytest.fixture
 def test_simple():
     proc = subprocess.Popen(['ls test/test-tree | lgrep "python files"'], stdin=subprocess.PIPE, stdout=subprocess.PIPE, shell=True)
-    out, err = proc.communicate()
+    out, _ = proc.communicate()
     result = out.decode('utf-8').split('\n')[1:-1]
     if len(result) == 6:
         return True
@@ -15,7 +15,7 @@ def test_simple():
 @pytest.fixture
 def test_medium():
     proc = subprocess.Popen(['ls test/test-tree | lgrep "images file"'], stdin=subprocess.PIPE, stdout=subprocess.PIPE, shell=True)
-    out, err = proc.communicate()
+    out, _ = proc.communicate()
     result = out.decode('utf-8').split('\n')[1:-1]
     if len(result) == 5:
         return True
@@ -25,7 +25,7 @@ def test_medium():
 @pytest.fixture
 def test_hard():
     proc = subprocess.Popen(['ls test/test-tree | lgrep "mp3 files with a a in the filename"'], stdin=subprocess.PIPE, stdout=subprocess.PIPE, shell=True)
-    out, err = proc.communicate()
+    out, _ = proc.communicate()
     result = out.decode('utf-8').split('\n')[1:-1]
     if len(result) == 2:
         return True
@@ -36,7 +36,7 @@ def test_hard():
 @pytest.fixture
 def test_file():
     proc = subprocess.Popen(['cat test/test-files/words.txt | lgrep "contains a hyphen"'], stdin=subprocess.PIPE, stdout=subprocess.PIPE, shell=True)
-    out, err = proc.communicate()
+    out, _ = proc.communicate()
     result = out.decode('utf-8').split('\n')[1:-1]
     if len(result) == 8:
         return True
