@@ -51,3 +51,14 @@ version_message = f"""
 lgrep version {__version__}
 """
 
+key_not_found_message = """
+OPENAI_API_KEY not found in environment variables. 
+
+To set it, add 'export OPENAI_API_KEY=your_openai_api_key_here' to your shell configuration file (e.g., ~/.bashrc or ~/.zshrc) and run 'source ~/.bashrc' or restart your terminal.
+
+Example:
+
+     echo 'export OPENAI_API_KEY=your_openai_api_key_here' >> ~/.bashrc
+     source ~/.bashrc
+ 
+"""
