@@ -7,7 +7,7 @@ setup(
     include_package_data=True,
     entry_points={
         'console_scripts': [
-            'lgrep=src.main',
+            'lgrep=src.main:main',
         ],
     },
     install_requires=[
@@ -18,5 +18,5 @@ setup(
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
     ],
-    python_requires='>=3.10',
+    python_requires='>=3.8',
 )
