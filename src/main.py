@@ -50,8 +50,8 @@ def main():
     if len(sys.argv) > 1:
         arg = sys.argv[1]
     else:
-        handler.console.print("No argument given", style="bold red")
-        handler.console.print("Use lrep --help or lgrep -h for usage information.", style="bold blue")
+        handler.console.print("ERROR: No argument given", style="bold red")
+        handler.console.print(help_message, style="bold blue")
         sys.exit(1)
         
     if arg == "--help" or arg == "-h":
@@ -63,8 +63,8 @@ def main():
         sys.exit(0)
 
     if sys.stdin.isatty():
-        handler.console.print("No input data", style="bold red")
-        handler.console.print("Use lrep --help or lgrep -h for usage information.", style="bold blue")
+        handler.console.print("ERROR: No input data", style="bold red")
+        handler.console.print(help_message, style="bold blue")
         sys.exit(1)
 
         
