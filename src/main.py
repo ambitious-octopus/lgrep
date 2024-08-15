@@ -64,6 +64,7 @@ def main():
 
     if sys.stdin.isatty():
         handler.console.print("No input data", style="bold red")
+        handler.console.print("Use lrep --help or lgrep -h for usage information.", style="bold blue")
         sys.exit(1)
 
         
