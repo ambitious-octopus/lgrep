@@ -31,17 +31,11 @@ class Singleton:
                 ],
                 model="gpt-4o",
             )
-        except openai.error.InvalidRequestError:
-            self.console.print("Invalid request", style="bold red")
+        except openai.AuthenticationError as error:
+            self.console.print(f"AUTHENTICATION ERROR \n {error}", style="bold red")
             sys.exit(1)
-        except openai.error.APIConnectionError:
-            self.console.print("API connection error", style="bold red")
-            sys.exit(1)
-        except openai.error.AuthenticationError:
-            self.console.print("Authentication error", style="bold red")
-            sys.exit(1)
-        except openai.error.RateLimitError:
-            self.console.print("Rate limit error", style="bold red")
+        except Exception as error:
+            self.console.print(f"ERROR \n {error}", style="bold red")
             sys.exit(1)
         
         pattern = result.choices[0].message.content
@@ -72,18 +66,19 @@ class Singleton:
             sys.exit(1)
         options = [i for i in args if i.startswith("-")]
         prompt = [i for i in args if not i.startswith("-")]
-        if not len(prompt):
-            self.console.print("ERROR: No prompt given", style="bold red")
-            self.console.print(help_message, style="bold blue")
-            sys.exit(1)
         if len(options) > 1:
             self.console.print("ERROR: Too many options", style="bold red")
             self.console.print(help_message, style="bold blue")
             sys.exit(1)
-        elif not len(options):
+        elif not options:
             option = ""
         else:
             option = options[0]
+        if not len(prompt) and not option:
+            self.console.print("ERROR: No prompt given", style="bold red")
+            self.console.print(help_message, style="bold blue")
+            sys.exit(1)
+        
         return option, prompt
     
     

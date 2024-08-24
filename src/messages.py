@@ -12,6 +12,7 @@ logo = """
      /$$  \ $$                    | $$      
     |  $$$$$$/                    | $$      
      \______/                     |__/       
+
 """
 
 
@@ -34,7 +35,6 @@ Options:
      -v, --version: show lgrep version
      -p, --pattern: show only the generated regex pattern
      
-
 
 """
 
