@@ -3,7 +3,7 @@ import openai
 import sys
 import re
 from rich.console import Console
-from src.messages import key_not_found_message
+from src.messages import key_not_found_message, help_message
 
 
 class Singleton:
@@ -17,7 +17,7 @@ class Singleton:
         
         self.client = openai.Client(api_key=self.token)
         
-    def run(self, prompt):
+    def run(self, prompt, just_pattern=False):
         try:
             result = self.client.chat.completions.create(
                 messages=[
@@ -31,9 +31,6 @@ class Singleton:
                 ],
                 model="gpt-4o",
             )
-            pattern = result.choices[0].message.content
-            self.console.print("Regex Pattern:", result, style="bold violet")
-            return result
         except openai.error.InvalidRequestError:
             self.console.print("Invalid request", style="bold red")
             sys.exit(1)
@@ -47,10 +44,16 @@ class Singleton:
             self.console.print("Rate limit error", style="bold red")
             sys.exit(1)
         
+        pattern = result.choices[0].message.content
+        self.console.print("Regex Pattern:", pattern, style="bold violet")
+        
+        if just_pattern:
+            return
+        
         for line in sys.stdin.readlines():
             res = re.match(pattern, line)
-        if res is not None:
-            self.console.print(line, end="", style="bold green")
+            if res is not None:
+                self.console.print(line, end="", style="bold green")
         
         
     def check_openai_api_key(self):
@@ -60,5 +63,27 @@ class Singleton:
             return False
         else:
             return True
+    
+    def parse_cli(self, args):
+        args = args[1:]
+        if not len(args):
+            self.console.print("ERROR: No argument given", style="bold red")
+            self.console.print(help_message, style="bold blue")
+            sys.exit(1)
+        options = [i for i in args if i.startswith("-")]
+        prompt = [i for i in args if not i.startswith("-")]
+        if not len(prompt):
+            self.console.print("ERROR: No prompt given", style="bold red")
+            self.console.print(help_message, style="bold blue")
+            sys.exit(1)
+        if len(options) > 1:
+            self.console.print("ERROR: Too many options", style="bold red")
+            self.console.print(help_message, style="bold blue")
+            sys.exit(1)
+        elif not len(options):
+            option = ""
+        else:
+            option = options[0]
+        return option, prompt
     
     

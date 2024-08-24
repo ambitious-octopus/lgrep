@@ -32,7 +32,7 @@ Usage: command | lgrep 'condition'
 Options:
      -h, --help: show this help message
      -v, --version: show lgrep version
-     -s, --settings: show lgrep settings
+     -p, --pattern: show only the generated regex pattern
      
 
 
