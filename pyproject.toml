@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lgrep"
+version = "0.1"
+description = "A tool for logging and searching text data efficiently."
+authors = [{name = "Your Name", email = "youremail@example.com"}]
+license = {text = "MIT"}
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+dependencies = [
+    "openai",
+    "rich"
+]
+
+[tool.setuptools.packages]
+find = {}
+
+
+[project.scripts]
+lgrep = "src.main:main"
